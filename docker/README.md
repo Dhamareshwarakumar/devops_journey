@@ -48,3 +48,45 @@ CMD ["mongod"]
 ```
 
 -   `docker build -t <image_name> .`
+
+# Building a node image
+
+## Workflow
+
+-   Bring the base image
+-   Create a Working Directory
+-   Bring all Files
+-   Run Installer
+-   Default Commands
+
+## Dockerfile
+
+```Dockerfile
+FROM node:alpine
+
+WORKDIR /usr/nodeapp
+
+COPY ./ ./
+
+RUN npm install
+
+CMD [ "npm", "start" ]
+```
+
+# Multi Image Container
+
+-   carete a `docker-compose.yml` file
+
+```Dockerfile
+version: "3"
+services:
+  mymongo:
+    image: "mongo"
+
+  mynode:
+    build: .
+    ports:
+      - "8000:3333"
+```
+
+-   docker-compose up --build
